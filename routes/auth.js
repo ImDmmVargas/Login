@@ -5,6 +5,9 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 
+// Redirect root of auth router to the login page
+router.get('/', (req, res) => res.redirect('/login'));
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
