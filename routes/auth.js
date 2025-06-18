@@ -5,12 +5,20 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 
+// Redirect root of auth router to the login page
+router.get('/', (req, res) => res.redirect('/login'));
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// Validate email with regex instead of built-in isEmail
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 router.post('/login', [
-  check('email').isEmail().withMessage('Correo inválido'),
+  check('email')
+    .matches(emailRegex)
+    .withMessage('Correo inválido'),
   check('password').notEmpty()
 ], async (req, res, next) => {
   const errors = validationResult(req);
