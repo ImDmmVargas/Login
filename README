@@ -1,1 +1,77 @@
-Hola
+# Guía paso a paso
+
+Este repositorio contiene una guía básica para implementar un sistema de autenticación con dos fases de inicio de sesión:
+
+1. Login tradicional con correo y contraseña.
+2. Login con Google restringido a cuentas `@upqroo.edu.mx`.
+
+Al final se muestra cómo crear un pequeño dashboard que consulte una base de datos y exporte los resultados a un archivo Excel.
+
+## 1. Requisitos
+
+- Node.js (versión 14 o superior)
+- MySQL o MariaDB (puedes usar cualquier motor SQL que prefieras)
+- Un navegador moderno
+
+## 2. Creación de la base de datos
+
+1. Instala MySQL y asegúrate de que el servicio esté en ejecución.
+2. Ingresa a la consola de MySQL y crea una base de datos y una tabla de usuarios:
+
+```sql
+CREATE DATABASE login_app;
+USE login_app;
+
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL
+);
+```
+
+3. Crea un usuario con permisos para acceder a esta base de datos.
+
+## 3. Configuración del proyecto
+
+El repositorio ya contiene un ejemplo listo para usar. Solo necesitas
+instalar las dependencias:
+
+```bash
+npm install
+```
+
+
+
+## 4. Implementación básica
+
+El proyecto incluye ejemplos de código en los siguientes archivos:
+
+1. `index.js` – servidor Express y configuración de sesiones.
+2. `config/passport.js` – estrategias local y de Google.
+3. `routes/auth.js` – rutas de autenticación y cierre de sesión.
+4. `routes/dashboard.js` – consulta de usuarios y exportación a Excel.
+
+Se usa `passport-local` para el login inicial y luego se redirige a Google. Solo se permiten cuentas con dominio `@upqroo.edu.mx`.
+
+## 5. Pasos detallados
+
+A continuación se presenta un resumen de los archivos clave:
+
+- `index.js`: configuración principal de Express y rutas de autenticación.
+- `config/passport.js`: definición de las estrategias de Passport (local y Google).
+- `routes/auth.js`: rutas para manejar el registro, login y redirecciones.
+- `routes/dashboard.js`: ruta protegida que realiza la consulta a la base de datos y genera el Excel.
+
+Consulta la documentación de cada módulo para obtener más detalles.
+
+## 6. Ejecución
+
+1. Copia el archivo `.env.example` a `.env` y actualiza las credenciales de la base de datos y de Google.
+2. Asegúrate de que la base de datos esté creada.
+3. Ejecuta `npm start` para iniciar el servidor.
+4. Accede a `http://localhost:3000` en tu navegador y sigue el flujo de autenticación.
+
+## Notas finales
+
+Esta guía es un punto de partida. Debes añadir manejos de errores, protección CSRF, variables de entorno para las llaves de Google, y buenas prácticas de seguridad antes de usarla en producción.
+

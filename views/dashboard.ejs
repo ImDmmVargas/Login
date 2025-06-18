@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Usuarios</h1>
+  <a href="/dashboard/excel">Descargar Excel</a>
+  <ul>
+    <% users.forEach(function(user){ %>
+      <li><%= user.email %></li>
+    <% }); %>
+  </ul>
+  <a href="/logout">Cerrar sesión</a>
+</body>
+</html>
